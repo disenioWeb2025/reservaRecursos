@@ -481,8 +481,8 @@
         let reservasData = {}; // Aquí se almacenarán las reservas del Google Sheets
 
         // Datos de ejemplo - En la implementación real se obtendrían del Google Sheets
-        const recursosMatutino = ['salon10', 'carro', 'tv43', 'tvsalon5', 'tv50', 'informatica1'];
-        const recursosVespertino = ['salon10', 'canon', 'tv43', 'tvsalon5', 'tv50', 'informatica'];
+        const recursosMatutino = ['salon10', 'cañón', 'tv43', 'tvsalon5', 'tv50', 'informatica1'];
+        const recursosVespertino = ['salon10', 'cañón', 'tv43', 'tvsalon5', 'tv50', 'informatica'];
 
         function cambiarSemana(direccion) {
             semanaActual += direccion;
@@ -530,11 +530,11 @@
 
         function abrirFormulario() {
             // Aquí se abriría el formulario de Google Forms
-            const mensaje = '📝 Para hacer una nueva reserva, completa el formulario:\n\n[AQUÍ PONDRÍAS EL ENLACE DE TU GOOGLE FORM]';
+            const mensaje = '📝 Para hacer una nueva reserva, completa el formulario:\n\https://docs.google.com/forms/d/e/1FAIpQLSd8tSWtczpxZVtxteRFba1lXqvVRorgcRhpG3paysmy1NzSxg/viewform?usp=dialog';
             alert(mensaje);
             
             // En la implementación real:
-            // window.open('ENLACE_DE_TU_GOOGLE_FORM', '_blank');
+            // window.open('https://docs.google.com/forms/d/e/1FAIpQLSd8tSWtczpxZVtxteRFba1lXqvVRorgcRhpG3paysmy1NzSxg/viewform?usp=dialog', '_blank');
         }
 
         function filtrarRecursos() {
