@@ -50,12 +50,8 @@ function actualizarDatos() {
 }
 
 function abrirFormulario() {
-    // Aquí se abriría el formulario de Google Forms
-    const mensaje = '📝 Para hacer una nueva reserva, completa el formulario:\n\n[AQUÍ PONDRÍAS EL ENLACE DE TU GOOGLE FORM]';
-    alert(mensaje);
-
-    // En la implementación real:
-    // window.open('ENLACE_DE_TU_GOOGLE_FORM', '_blank');
+  window.open('https://docs.google.com/forms/d/e/1FAIpQLSd8tSWtczpxZVtxteRFba1lXqvVRorgcRhpG3paysmy1NzSxg/viewform?usp=dialog', '_blank');
+}
 }
 
 function filtrarRecursos() {
