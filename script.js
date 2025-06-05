@@ -50,7 +50,10 @@ function actualizarDatos() {
 }
 
 function abrirFormulario() {
-  window.open('https://docs.google.com/forms/d/e/1FAIpQLSd8tSWtczpxZVtxteRFba1lXqvVRorgcRhpG3paysmy1NzSxg/viewform?usp=dialog', '_blank');
+  window.open(
+    'https://docs.google.com/forms/d/e/1FAIpQLSd8tSWtczpxZVtxteRFba1lXqvVRorgcRhpG3paysmy1NzSxg/viewform',
+    '_blank'
+  );
 }
 
 
