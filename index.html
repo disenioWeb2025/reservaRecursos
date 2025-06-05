@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reservas de Recursos - Liceo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .disponible {
+      background: #d4edda;
+      color: #155724;
+    }
+    .ocupado {
+      background: #f8d7da;
+      color: #721c24;
+      font-weight: bold;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+      border: 1px solid #ccc;
+    }
+    .hora-cell {
+      font-weight: bold;
+      background: #2c3e50;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>📚 Sistema de Reservas</h1>
+  <p>Reservas desde Google Sheets</p>
+
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Hora</th>
+        <th>Lunes</th>
+        <th>Martes</th>
+        <th>Miércoles</th>
+        <th>Jueves</th>
+        <th>Viernes</th>
+      </tr>
+    </thead>
+    <tbody id="tabla">
+      <tr>
+        <td class="hora-cell">1era</td>
+        <td class="disponible">Disponible</td>
+        <td class="disponible">Disponible</td>
+        <td class="disponible">Disponible</td>
+        <td class="disponible">Disponible</td>
+        <td class="disponible">Disponible</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    function actualizarDatos() {
+      fetch("https://opensheet.elk.sh/1HMWG1ljGDIDuD2Xu0AAHjAnAdNnvdycb1-mgXBDBR4c/recursos")
+        .then((r) => r.json())
+        .then((datos) => procesarRespuestas(datos))
+        .catch((e) => console.error("❌ Error:", e));
+    }
+
+    function procesarRespuestas(datos) {
+      const fila = document.querySelector("#tabla tr");
+
+      datos.forEach((reserva) => {
+        const { Día, Hora, Descripción } = reserva;
+        const dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
+        const indice = dias.indexOf(Día);
+        if (indice !== -1 && fila) {
+          const celda = fila.children[indice + 1];
+          celda.className = "ocupado";
+          celda.textContent = Descripción;
+        }
+      });
+    }
+
+    actualizarDatos();
+  </script>
+</body>
+</html>
