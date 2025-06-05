@@ -40,7 +40,6 @@ function actualizarEncabezadosFechas(fechaBase) {
 }
 
 function actualizarDatos() {
-    // Aquí se conectaría con Google Sheets para obtener las reservas reales
     console.log('Actualizando datos desde Google Sheets...');
 
     // Simulación de actualización
@@ -50,12 +49,11 @@ function actualizarDatos() {
 }
 
 function abrirFormulario() {
-  window.open(
-    'https://docs.google.com/forms/d/e/1FAIpQLSd8tSWtczpxZVtxteRFba1lXqvVRorgcRhpG3paysmy1NzSxg/viewform',
-    '_blank'
-  );
+    window.open(
+        'https://docs.google.com/forms/d/e/1FAIpQLSd8tSWtczpxZVtxteRFba1lXqvVRorgcRhpG3paysmy1NzSxg/viewform',
+        '_blank'
+    );
 }
-
 
 function filtrarRecursos() {
     const filtro = document.getElementById('recursoFilter').value;
@@ -76,11 +74,7 @@ document.getElementById('recursoFilter').addEventListener('change', filtrarRecur
 // Inicializar
 actualizarSemana();
 
-// Función para conectar con Google Sheets (ejemplo)
 function conectarGoogleSheets() {
-    // Aquí iría el código para conectar con la API de Google Sheets
-    // Por ejemplo usando la Google Sheets API v4
-
     /*
     const SHEET_ID = 'TU_SHEET_ID';
     const API_KEY = 'TU_API_KEY';
@@ -96,6 +90,5 @@ function conectarGoogleSheets() {
 }
 
 function procesarRespuestas(datos) {
-    // Procesar las respuestas del formulario y actualizar la vista
-    // Convertir las respuestas planas en el formato visual de horarios
+    // Procesar respuestas del formulario
 }
