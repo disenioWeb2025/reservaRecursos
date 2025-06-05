@@ -1,272 +1,66 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservas de Recursos - Liceo</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(45deg, #3498db, #2c3e50);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-        .controls {
-            background: #f8f9fa;
-            padding: 20px;
-            border-bottom: 1px solid #e9ecef;
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .control-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .control-group label {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        select, button {
-            padding: 10px 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-        select:focus, button:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-        }
-        button {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
-        }
-        .content {
-            padding: 30px;
-        }
-        .turno-section {
-            margin-bottom: 50px;
-        }
-        .turno-title {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.2);
-        }
-        .recursos {
-            display: grid;
-            gap: 30px;
-        }
-        .recurso-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            overflow: hidden;
-            border: 1px solid #e9ecef;
-        }
-        .recurso-header {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 1.3em;
-            font-weight: bold;
-        }
-        .schedule-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .schedule-table th {
-            background: #34495e;
-            color: white;
-            padding: 15px 10px;
-            text-align: center;
-            font-weight: 600;
-        }
-        .schedule-table td {
-            padding: 12px 8px;
-            text-align: center;
-            border: 1px solid #ddd;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        .schedule-table tr:nth-child(even) { background-color: #f8f9fa; }
-        .schedule-table tr:hover { background-color: #e3f2fd; }
-        .hora-cell {
-            font-weight: bold;
-            background: #2c3e50 !important;
-            color: white;
-            width: 100px;
-        }
-        .disponible { background: #d4edda; color: #155724; }
-        .ocupado { background: #f8d7da; color: #721c24; font-weight: 600; }
-        .ocupado::before { content: "🔒 "; }
-        .disponible::before { content: "✅ "; }
-        .semana-nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 12px;
-        }
-        .semana-nav button {
-            background: linear-gradient(45deg, #27ae60, #2ecc71);
-        }
-        .semana-nav button:hover {
-            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
-        }
-        .semana-actual {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        .form-button {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-            color: white;
-            border: none;
-            padding: 20px;
-            border-radius: 50%;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        .form-button:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 12px 30px rgba(231, 76, 60, 0.4);
-        }
-        @media (max-width: 768px) {
-            .container { margin: 10px; border-radius: 10px; }
-            .header h1 { font-size: 2em; }
-            .schedule-table { font-size: 12px; }
-            .schedule-table th, .schedule-table td { padding: 8px 4px; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservas de Recursos - Liceo</title>
+  <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Sistema de Reservas</h1>
-            <p>Recursos y Espacios del Liceo</p>
-        </div>
-
-        <div class="controls">
-            <div class="control-group">
-                <label for="recursoFilter">Filtrar por recurso:</label>
-                <select id="recursoFilter">
-                    <option value="">Todos los recursos</option>
-                    <option value="salon10">Salón 10</option>
-                    <option value="carro">Carro</option>
-                    <option value="canon">Cañón</option>
-                    <option value="tv43">TV 43"</option>
-                    <option value="tvsalon5">TV Salón 5</option>
-                    <option value="tv50">TV 50"</option>
-                    <option value="informatica1">Sala Informática 1</option>
-                    <option value="informatica">Sala Informática</option>
-                </select>
-            </div>
-            <div class="control-group">
-                <button onclick="actualizarDatos()">🔄 Actualizar</button>
-                <button onclick="abrirFormulario()">➕ Nueva Reserva</button>
-            </div>
-        </div>
-
-        <div class="content">
-            <div class="semana-nav">
-                <button onclick="cambiarSemana(-1)">⬅️ Semana Anterior</button>
-                <div class="semana-actual" id="semanaActual">Semana del 3 al 7 de Junio 2025</div>
-                <button onclick="cambiarSemana(1)">Semana Siguiente ➡️</button>
-            </div>
-
-            <!-- AQUI VAN LOS BLOQUES DE TURNOS Y RECURSOS -->
-            <!-- Podés copiar los bloques de recursos como hiciste antes -->
-
-        </div>
+  <div class="container">
+    <div class="header">
+      <h1>📚 Sistema de Reservas</h1>
+      <p>Recursos y Espacios del Liceo</p>
     </div>
 
-    <button class="form-button" onclick="abrirFormulario()" title="Nueva Reserva">➕</button>
+    <div class="controls">
+      <div class="control-group">
+        <label for="recursoFilter">Filtrar por recurso:</label>
+        <select id="recursoFilter">
+          <option value="">Todos los recursos</option>
+          <option value="salon10">Salón 10</option>
+          <option value="carro">Carro</option>
+          <option value="canon">Cañón</option>
+          <option value="tv43">TV 43"</option>
+          <option value="tvsalon5">TV Salón 5</option>
+          <option value="tv50">TV 50"</option>
+          <option value="informatica1">Sala Informática 1</option>
+          <option value="informatica">Sala Informática</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <button onclick="actualizarDatos()">🔄 Actualizar</button>
+        <button onclick="abrirFormulario()">➕ Nueva Reserva</button>
+      </div>
+    </div>
 
-    <script>
-        let semanaActual = 0;
+    <div class="content">
+      <div class="semana-nav">
+        <button onclick="cambiarSemana(-1)">⬅️ Semana Anterior</button>
+        <div class="semana-actual" id="semanaActual">Semana del 3 al 7 de Junio 2025</div>
+        <button onclick="cambiarSemana(1)">Semana Siguiente ➡️</button>
+      </div>
 
-        function abrirFormulario() {
-            window.open("https://docs.google.com/forms/d/e/1FAIpQLSd8tSWtczpxZVtxteRFba1lXqvVRorgcRhpG3paysmy1NzSxg/viewform?usp=dialog", "_blank");
-        }
+      <!-- Secciones matutino y vespertino -->
+      <div class="turno-section" id="matutino-section">
+        <div class="turno-title">🌅 TURNO MATUTINO</div>
+        <div class="recursos" id="recursos-matutino">
+          <!-- Aquí se cargan dinámicamente las tarjetas -->
+        </div>
+      </div>
 
-        function cambiarSemana(direccion) {
-            semanaActual += direccion;
-            actualizarSemana();
-        }
+      <div class="turno-section" id="vespertino-section">
+        <div class="turno-title">🌆 TURNO VESPERTINO</div>
+        <div class="recursos" id="recursos-vespertino">
+          <!-- Aquí se cargan dinámicamente las tarjetas -->
+        </div>
+      </div>
+    </div>
+  </div>
 
-        function actualizarSemana() {
-            const fechaBase = new Date(2025, 5, 3);
-            fechaBase.setDate(fechaBase.getDate() + (semanaActual * 7));
-            const fechaFin = new Date(fechaBase);
-            fechaFin.setDate(fechaFin.getDate() + 4);
-            const semanaTexto = `Semana del ${fechaBase.getDate()} al ${fechaFin.getDate()} de ${fechaBase.toLocaleDateString('es', {month: 'long'})} ${fechaBase.getFullYear()}`;
-            document.getElementById('semanaActual').textContent = semanaTexto;
-        }
+  <button class="form-button" onclick="abrirFormulario()" title="Nueva Reserva">➕</button>
 
-        function actualizarDatos() {
-            alert("✅ Datos actualizados (simulado)");
-        }
-
-        document.getElementById('recursoFilter').addEventListener('change', () => {
-            const filtro = document.getElementById('recursoFilter').value;
-            const cards = document.querySelectorAll('.recurso-card');
-            cards.forEach(card => {
-                card.style.display = (filtro === '' || card.dataset.recurso === filtro) ? 'block' : 'none';
-            });
-        });
-
-        actualizarSemana();
-    </script>
+  <script src="script.js"></script>
 </body>
 </html>
+
