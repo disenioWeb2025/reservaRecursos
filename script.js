@@ -48,6 +48,31 @@ function actualizarDatos() {
     }, 500);
 }
 
+function cargarReservasDesdeCSV() {
+    fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ1y_EFMqR0CXcAgsgy105xm-Qfvojyao6cjoC_IOaG3P2ucBtafxiqfWxuu1b1GhCyZzSwXoF7E5xA/pub?output=csv')
+        .then(response => response.text())
+        .then(csv => {
+            const filas = csv.split('\n').slice(1); // quitamos la cabecera
+            const cuerpoTabla = document.getElementById('tablaReservas');
+            cuerpoTabla.innerHTML = ''; // Limpiar por si ya había datos
+
+            filas.forEach(fila => {
+                const columnas = fila.split(',');
+
+                if (columnas.length >= 3) {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${columnas[0]}</td>
+                        <td>${columnas[1]}</td>
+                        <td>${columnas[2]}</td>
+                    `;
+                    cuerpoTabla.appendChild(tr);
+                }
+            });
+        })
+        .catch(error => console.error('Error al cargar el CSV:', error));
+}
+
 function abrirFormulario() {
     window.open(
         'https://docs.google.com/forms/d/e/1FAIpQLSd8tSWtczpxZVtxteRFba1lXqvVRorgcRhpG3paysmy1NzSxg/viewform',
@@ -73,6 +98,7 @@ document.getElementById('recursoFilter').addEventListener('change', filtrarRecur
 
 // Inicializar
 actualizarSemana();
+cargarReservasDesdeCSV(); // 👈 Esta línea carga la tabla al iniciar
 
 function conectarGoogleSheets() {
     /*
