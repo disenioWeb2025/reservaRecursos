@@ -23,6 +23,7 @@ function actualizarSemana() {
 
     // Actualizar encabezados de las tablas
     actualizarEncabezadosFechas(fechaBase);
+     cargarReservasDesdeCSV();
 }
 
 function actualizarEncabezadosFechas(fechaBase) {
